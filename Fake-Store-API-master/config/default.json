@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://admin:MBIlnIiRQ7Qh1zPl@fake-store-cluster.b662jbb.mongodb.net/",
+  "jwtsecret": "MBIlnIiRQ7Qh1zPl"
+}
