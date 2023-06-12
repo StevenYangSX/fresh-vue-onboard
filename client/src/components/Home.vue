@@ -3,19 +3,21 @@
     <Alert>首页组件</Alert>
     
     <!-- TODO -->
-    <i-switch />
+    <RadioGroup @on-change="changeForm" v-model="form">
+      <Radio label="Register"></Radio>
+      <Radio label="Login"></Radio>
+    </RadioGroup>
     <div v-if="showRegisterForm">
-      <RegisterForm @submit-register="TestCall"/>
+      <RegisterForm />
     </div>
     <div v-if="showLoginForm">
-      <LoginForm @submit-login="TestCall"/>
+      <LoginForm />
     </div>
   </div>
 </template>
 
 <script>
 /*  调用接口 示范  1.  引入api */
-import iSwitch from './i-switch.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
 import { userRegisterApi } from "@/api/user";
@@ -23,7 +25,6 @@ import { userRegisterApi } from "@/api/user";
 export default {
   name: "home",
   components:{
-    iSwitch,
     LoginForm,
     RegisterForm
   },
@@ -33,7 +34,8 @@ export default {
   data() {
     return {
       showLoginForm: false,
-      showRegisterForm: true
+      showRegisterForm: true,
+      form: 'Register'
     }
   },
   methods: {
@@ -53,8 +55,9 @@ export default {
           this.$Message.error(err.errors ? err.errors[0].msg : "未知错误");
         });
     },
-    TestCall(data) {
-      console.log(data)
+    changeForm() {
+        this.showLoginForm = !this.showLoginForm
+        this.showRegisterForm = !this.showRegisterForm
     }
   },
 };
