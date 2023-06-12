@@ -1,19 +1,28 @@
 <template>
   <div class="container">
     <Alert>首页组件</Alert>
-
+    
     <!-- TODO -->
-    <!-- <RegisterForm/> -->
-    <!-- <LoginForm/> -->
+    <Switch />
+    <RegisterForm @submit-register="TestCall"/>
+    <LoginForm @submit-login="TestCall"/>
   </div>
 </template>
 
 <script>
 /*  调用接口 示范  1.  引入api */
+import Switch from './Switch.vue'
+import LoginForm from './LoginForm.vue'
+import RegisterForm from './RegisterForm.vue'
 import { userRegisterApi } from "@/api/user";
 
 export default {
   name: "home",
+  components:{
+    Switch,
+    LoginForm,
+    RegisterForm
+  },
   mounted() {
     this.ApiCall();
   },
@@ -34,6 +43,17 @@ export default {
           this.$Message.error(err.errors ? err.errors[0].msg : "未知错误");
         });
     },
+    TestCall(data) {
+      console.log(data)
+    }
   },
 };
 </script>
+
+<style>
+.container {
+  max-height: 740px;
+  max-width: 1024px;
+  align-items: center;
+}
+</style>

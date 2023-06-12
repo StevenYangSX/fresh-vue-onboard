@@ -14,6 +14,17 @@ export function userRegisterApi(data) {
 
 // TODO
 // 用户登录接口
+export function userLoginApi(data) {
+  return request({
+    url: "/auth",
+    method: "post",
+    data,
+  });
+}
+
+
+
+
 
 // 增加一个商品 至 当前登录用户的购物车 by id
 
