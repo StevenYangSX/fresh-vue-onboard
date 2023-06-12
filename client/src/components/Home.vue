@@ -3,15 +3,19 @@
     <Alert>首页组件</Alert>
     
     <!-- TODO -->
-    <Switch />
-    <RegisterForm @submit-register="TestCall"/>
-    <LoginForm @submit-login="TestCall"/>
+    <i-switch />
+    <div v-if="showRegisterForm">
+      <RegisterForm @submit-register="TestCall"/>
+    </div>
+    <div v-if="showLoginForm">
+      <LoginForm @submit-login="TestCall"/>
+    </div>
   </div>
 </template>
 
 <script>
 /*  调用接口 示范  1.  引入api */
-import Switch from './Switch.vue'
+import iSwitch from './i-switch.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
 import { userRegisterApi } from "@/api/user";
@@ -19,12 +23,18 @@ import { userRegisterApi } from "@/api/user";
 export default {
   name: "home",
   components:{
-    Switch,
+    iSwitch,
     LoginForm,
     RegisterForm
   },
   mounted() {
     this.ApiCall();
+  },
+  data() {
+    return {
+      showLoginForm: false,
+      showRegisterForm: true
+    }
   },
   methods: {
     ApiCall() {
