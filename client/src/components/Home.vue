@@ -1,64 +1,79 @@
 <template>
   <div class="container">
-    <Alert>首页组件</Alert>
-    
-    <!-- TODO -->
-    <RadioGroup @on-change="changeForm" v-model="form">
-      <Radio label="Register"></Radio>
-      <Radio label="Login"></Radio>
-    </RadioGroup>
-    <div v-if="showRegisterForm">
-      <RegisterForm />
-    </div>
-    <div v-if="showLoginForm">
-      <LoginForm />
-    </div>
+    <HelloWorld />
+    <Button @click="toRegister">注册</Button>
+    <Button @click="toLogin">登录</Button>
+
+    <!-- what computed and what do -->
+    <!-- 获取token的过期时间 -->
+    <!-- <div>{{ firstFiveChars }}</div>
+    <Button @click="tokenHandler">获取token过期时间</Button> -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 /*  调用接口 示范  1.  引入api */
-import LoginForm from './LoginForm.vue'
-import RegisterForm from './RegisterForm.vue'
-import { userRegisterApi } from "@/api/user";
+import HelloWorld from "./HelloWorld.vue";
 
 export default {
   name: "home",
-  components:{
-    LoginForm,
-    RegisterForm
+  components: {
+    HelloWorld,
   },
   mounted() {
-    this.ApiCall();
+    // this.ApiCall();
+    // console.log("Main.....", this);
   },
+
+  computed: {
+    // a computed getter
+    firstFiveChars: function () {
+      return this.gotToken.slice(0, 5);
+    },
+  },
+
+  // watch: {
+  //   someData: {
+  //     handler(newValue, oldValue) {
+  //       // console.log(newValue, oldValue);
+  //       console.log("someData changed!");
+  //     },
+  //     deep: true,
+  //   },
+  // },
+
   data() {
     return {
-      showLoginForm: false,
-      showRegisterForm: true,
-      form: 'Register'
-    }
+      form: "Register",
+      gotToken: "",
+
+      // props
+      userName: "test123@gmail.com",
+      userNameOjb: {
+        email: "test123@gmail.com",
+        password: "123456",
+      },
+    };
   },
   methods: {
-    ApiCall() {
-      let payload = {
-        name: "tese",
-        password: "123123",
-        email: "test@gmail.com",
-      };
-      userRegisterApi(payload)
-        .then((res) => {
-          // TODO 调用api 成功  数据处理
-          console.log(res);
-        })
-        .catch((err) => {
-          // TODO 调用api 失败  数据处理
-          this.$Message.error(err.errors ? err.errors[0].msg : "未知错误");
-        });
+    toRegister() {
+      this.$router.push({ path: "register" });
+    },
+    toLogin() {
+      this.$router.push({ path: "login" });
+    },
+    tokenHandler() {
+      this.gotToken = 123123;
+    },
+    gotTokenEmit(payload) {
+      console.log("%cpayload------>", "background: #222; color: #bada55;font-size: 14px", payload);
+      this.gotToken = payload;
     },
     changeForm() {
-        this.showLoginForm = !this.showLoginForm
-        this.showRegisterForm = !this.showRegisterForm
-    }
+      this.showLoginForm = !this.showLoginForm;
+      this.showRegisterForm = !this.showRegisterForm;
+    },
   },
 };
 </script>
